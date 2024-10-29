@@ -1,34 +1,44 @@
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Library;
 
 public class Phonebook
 {
-    private List<Contact> persons;
+    public Contact Dueño { get; private set; }
+    private List<Contact> _contactos;
+    private IMessageChannel _messageChannel;
 
-    public Phonebook(Contact owner)
+    public Phonebook(Contact dueño, IMessageChannel messageChannel)
     {
-        this.Owner = owner;
-        this.persons = new List<Contact>();
+        Dueño = dueño;
+        this._messageChannel = messageChannel;
+        _contactos = new List<Contact>();
     }
 
-    public Contact Owner { get; }
-
-    public List<Contact> Search(string[] names)
+    public void AgregarContacto(Contact contacto)
     {
-        List<Contact> result = new List<Contact>();
+        _contactos.Add(contacto);
+    }
 
-        foreach (Contact person in this.persons)
+    public void QuitarContacto(Contact contacto)
+    {
+        _contactos.Remove(contacto);
+    }
+
+    public Contact Search(string nombre)
+    {
+        return _contactos.FirstOrDefault(contacto => contacto.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public void EnviarMensaje(string nombreDestinatario, string texto)
+    {
+        Contact destinatario = Search(nombreDestinatario);
+        if (destinatario != null)
         {
-            foreach (string name in names)
-            {
-                if (person.Name.Equals(name))
-                {
-                    result.Add(person);
-                }
-            }
+            Message mensaje = new Message(texto, Dueño.Telefono, destinatario.Telefono);
+            _messageChannel.Send(mensaje);
         }
-
-        return result;
     }
 }

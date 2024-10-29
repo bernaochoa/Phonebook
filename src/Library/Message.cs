@@ -2,15 +2,14 @@ namespace Library;
 
 public class Message
 {
-    public Message(string from, string to)
+    public string Texto { get; private set; }
+    public string Remitente { get; private set; }
+    public string Destinatario { get; private set; }
+
+    public Message(string texto, string remitente, string destinatario)
     {
-        this.From = from;
-        this.To = to;
+        Texto = texto;
+        Remitente = remitente;
+        Destinatario = destinatario;
     }
-
-    public string Text { get; set; }
-
-    public string From { get; }
-
-    public string To { get; }
 }

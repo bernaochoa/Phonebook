@@ -1,23 +1,22 @@
 ﻿using System;
 using Library;
+using WhatsAppApiUCU;
 
 namespace Program
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            // Crear el contacto dueño
-
-            // Crear la lista de contactos
-
-            // Agregar contactos a la lista
-
-            // Enviar un correo a algunos contactos
-
-            // Enviar un WhatsApp a algunos contactos
-
-            // Enviar un SMS a algunos contactos
+            Contact dueño = new Contact("Juan", "12345678", "juan@ucu.edu.uy");
+            Phonebook agenda = new Phonebook(dueño, new WhatsAppChannel());
+            
+            Contact contacto = new Contact("Berna", "+59891447188", "bernaochoa06@gmail.com");
+            agenda.AgregarContacto(contacto);
+            agenda.EnviarMensaje(contacto.Nombre,"Hola, ¿Todo bien?");
+            
+            var whatsApp = new WhatsAppApi();
+            whatsApp.Send("+59891447188", "Hey! I'm using WhatsApp");
         }
     }
 }

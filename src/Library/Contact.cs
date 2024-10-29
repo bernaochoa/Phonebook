@@ -2,14 +2,14 @@
 
 public class Contact
 {
-    public Contact(string name)
+    public string Nombre { get; private set; }
+    public string Telefono { get; private set; }
+    public string Correo { get; private set; }
+
+    public Contact(string nombre, string telefono, string correo)
     {
-        this.Name = name;
+        Nombre = nombre;
+        Telefono = telefono;
+        Correo = correo;
     }
-
-    public string Name { get; set; }
-
-    public string Phone { get; set; }
-
-    public string Email { get; set; }
 }
